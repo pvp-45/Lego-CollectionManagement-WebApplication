@@ -8,29 +8,9 @@
 </head>
 <body>
 
-  <!-- Responsive Navbar -->
-  <div class="navbar bg-base-100">
-    <div class="flex-1">
-      <a class="btn btn-ghost normal-case text-xl" href="/">Lego Collection</a>
-    </div>
+  <%- include('partials/navbar', {page: '/about'}) %>
 
-    <div class="navbar-center hidden sm:flex">
-      <ul class="menu menu-horizontal px-1">
-        <li><a href="/">Home</a></li>
-        <li><a class="active" href="/about">About</a></li>
-        <li>
-          <details>
-            <summary>Theme</summary>
-            <ul class="p-2 bg-base-100 right-0">
-              <li><a href="/lego/sets?theme=Technic">Technic</a></li>
-              <li><a href="/lego/sets?theme=Town">Town</a></li>
-              <li><a href="/lego/sets?theme=Books">Books</a></li>
-            </ul>
-          </details>
-        </li>
-      </ul>
-    </div>
-  </div>
+
 
   
   <div class="container mx-auto">

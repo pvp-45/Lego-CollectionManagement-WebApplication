@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lego Collection - Sets</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <div class="navbar bg-base-100">
+        <div class="flex-1  ">
+            <a class="btn btn-ghost normal-case text-xl" href="/">Lego Collection</a>
+        </div>
+        <div class="navbar-center hidden sm:flex">
+            <ul class="menu menu-horizontal px-1">
+                <li><a class="<%= (page == "/lego/sets") ? 'active' : '' %>" href="/lego/sets">View Collection</a></li>
+                <li><a class="<%= (page == "/about") ? 'active' : '' %>" href="/about">About</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="bg-slate-200 p-8 rounded-lg text-center">
+        <h1 class="text-4xl font-bold mb-4">Lego Collection</h1>
+        <div class="flex justify-center space-x-4">
+          <a href="/lego/sets?theme=Technic" class="bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 inline-block mt-4">Technic</a>
+          <a href="/lego/sets?theme=Town" class="bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 inline-block mt-4">Town</a>
+          <a href="/lego/sets?theme=Books" class="bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 inline-block mt-4">Books</a>
+          <!-- Add more theme links as needed with appropriate classes -->
+        </div>
+      </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Theme</th>
+                    <th>Year</th>
+                    <th>Parts</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% sets.forEach(function(set) { %>
+                    <tr>
+                        <td><img src="<%= set.img_url %>" alt="<%= set.name %>" class="w-16 h-16"></td>
+                        <td><%= set.name %></td>
+                        <td><a href="/lego/sets?theme=<%= set.theme %>" class="btn btn-sm btn-primary"><%= set.theme %></a></td>
+                        <td><%= set.year %></td>
+                        <td><%= set.num_parts %></td>
+                        <td><a href="/lego/sets/<%= set.set_num %>" class="btn btn-sm btn-primary">Details</a></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
