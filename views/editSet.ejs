@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Set</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<%- include('partials/navbar', { page: '/lego/editSet' }) %>
+<div class="flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-md p-8">
+    <h2 class="text-3xl font-semibold mb-4">Edit Set</h2>
+    <form action="/lego/editSet" method="POST" class="max-w-md">
+        
+        <div class="mb-4">
+            <label for="set_num" class="block text-sm font-medium text-gray-600">Set Number:</label>
+            <input type="text" name="set_num" value="<%= set.set_num %>" readonly class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300 cursor-not-allowed">
+        </div>
+
+
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-600">Name:</label>
+            <input type="text" name="name" value="<%= set.name %>" required class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="mb-4">
+            <label for="year" class="block text-sm font-medium text-gray-600">Year:</label>
+            <input type="number" name="year" value="<%= set.year %>" required class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="mb-4">
+            <label for="num_parts" class="block text-sm font-medium text-gray-600">Number of Parts:</label>
+            <input type="number" name="num_parts" value="<%= set.num_parts %>" required class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="mb-4">
+            <label for="img_url" class="block text-sm font-medium text-gray-600">Image URL:</label>
+            <input type="url" name="img_url" value="<%= set.img_url %>" required class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+        </div>
+
+        <div class="mb-4">
+            <label for="theme_id" class="block text-sm font-medium text-gray-600">Theme:</label>
+            <select name="theme_id" required class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-blue-300">
+                <% themes.forEach(theme => { %>
+                    <option value="<%= theme.id %>" <%= (set.theme_id == theme.id) ? "selected" : "" %>>
+                        <%= theme.name %>
+                    </option>
+                <% }) %>
+            </select>
+        </div>
+    
+    
+
+
+    <button type="submit" class="btn btn-sm btn-primary">Update Set</button>
+    <a href="/lego/deleteSet/<%= set.set_num %>" class="btn btn-sm btn-primary">Delete Set</a>
+  </form>
+</div>
+</div>
+</body>
+</html>

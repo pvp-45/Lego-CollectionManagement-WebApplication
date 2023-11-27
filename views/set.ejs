@@ -15,6 +15,7 @@
             <ul class="menu menu-horizontal px-1">
                 <li><a class="<%= (page == "/lego/sets") ? 'active' : '' %>" href="/lego/sets">View Collection</a></li>
                 <li><a class="<%= (page == "/about") ? 'active' : '' %>" href="/about">About</a></li>
+                
             </ul>
         </div>
     </div>
@@ -30,9 +31,10 @@
             <div class="set-info">
                 <p><strong>Name:</strong> <%= set.name %></p>
                 <p><strong>Year:</strong> <%= set.year %></p>
-                <p><strong>Theme:</strong> <%= set.theme %></p>
+                <p><strong>Theme:</strong> <%= set.Theme.name %></p>
                 <p><strong>Parts:</strong> <%= set.num_parts %></p>
                 <p id="quote">Loading a random quote...</p>
+                <a href="/lego/editSet/<%= set.set_num %>" class="btn btn-primary">Edit Set</a>
                 <a href="#" onclick="history.back(); return false;" class="btn btn-primary">Return</a>
             </div>
         </div>

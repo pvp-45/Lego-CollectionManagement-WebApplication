@@ -15,6 +15,7 @@
             <ul class="menu menu-horizontal px-1">
                 <li><a class="<%= (page == "/lego/sets") ? 'active' : '' %>" href="/lego/sets">View Collection</a></li>
                 <li><a class="<%= (page == "/about") ? 'active' : '' %>" href="/about">About</a></li>
+                <li><a class="<%= (page === '/lego/addSet') ? 'active' : '' %>" href="/lego/addSet">Add to Collection</a></li>
             </ul>
         </div>
     </div>
@@ -24,7 +25,6 @@
           <a href="/lego/sets?theme=Technic" class="bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 inline-block mt-4">Technic</a>
           <a href="/lego/sets?theme=Town" class="bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 inline-block mt-4">Town</a>
           <a href="/lego/sets?theme=Books" class="bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 inline-block mt-4">Books</a>
-          <!-- Add more theme links as needed with appropriate classes -->
         </div>
       </div>
 
@@ -44,7 +44,7 @@
                     <tr>
                         <td><img src="<%= set.img_url %>" alt="<%= set.name %>" class="w-16 h-16"></td>
                         <td><%= set.name %></td>
-                        <td><a href="/lego/sets?theme=<%= set.theme %>" class="btn btn-sm btn-primary"><%= set.theme %></a></td>
+                        <td><a href="/lego/sets?theme=<%= set.theme %>" class="btn btn-sm btn-primary"><%= set.Theme.name %></a></td>
                         <td><%= set.year %></td>
                         <td><%= set.num_parts %></td>
                         <td><a href="/lego/sets/<%= set.set_num %>" class="btn btn-sm btn-primary">Details</a></td>

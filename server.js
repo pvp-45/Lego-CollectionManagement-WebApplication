@@ -1,12 +1,12 @@
 /********************************************************************************
-* WEB322 – Assignment 04
+* WEB322 – Assignment 05
 * 
 * I declare that this assignment is my own work in accordance with Seneca's
 * Academic Integrity Policy:
 * 
 * https://www.senecacollege.ca/about/policies/academic-integrity-policy.html
 * 
-* Name: Pruthvi Patel Student ID: 170733216 Date: 8th November,2023
+* Name: Pruthvi Patel Student ID: 170733216 Date: 24th November,2023
 * Published URL: https://weak-pear-catfish-robe.cyclic.app/ 
 
 ********************************************************************************/
@@ -16,8 +16,9 @@ const express = require("express");
 const app = express();
 app.set('view engine', 'ejs');
 const legoData = require("./modules/legoSets");
+app.use(express.urlencoded({ extended: true }));
 
-// Initialize the Lego data and start the server when data is ready
+
 legoData.Initialize()
   .then(() => {
     app.listen(3000, () => {
@@ -28,18 +29,15 @@ legoData.Initialize()
     console.error("Error initializing Lego Data:", error);
   });
 
-// Route to the "Home" page
 app.get("/", (req, res) => {
   res.render("home");
 });
 
-// Route to the "About" page
 app.get("/about", (req, res) => {
-  res.render("about"); // Update to the correct path for your about.html file
+  res.render("about"); 
 });
 
 
-// Route responsible for responding with all of the Lego sets from the legoData module
 app.get("/lego/sets", (req, res) => {
   const theme = req.query.theme;
   if (theme) {
@@ -62,9 +60,6 @@ app.get("/lego/sets", (req, res) => {
 });
 
 
-
-// Route to demonstrate getSetByNum functionality
-//updated the function to use the params property to read the values of Route Parameters
 app.get("/lego/sets/:numDemo", (req, res) => {
   let setNum = req.params.numDemo;
   legoData.getSetByNum(setNum)
@@ -77,11 +72,71 @@ app.get("/lego/sets/:numDemo", (req, res) => {
 });
 
 
+app.get('/lego/addSet', async (req, res) => {
+  try {
+    const themes = await legoData.getAllThemes();
+    res.render('addSet', { themes });
+  } catch (err) {
+    res.render('500', { message: `I'm sorry, but we have encountered the following error: ${err}` });
+  }
+});
 
+  app.post('/lego/addSet', async (req, res) => {
+    
+      legoData.addSet(req.body)
+      .then(()=> {
+      res.redirect('/lego/sets');
+      })
+     .catch (err => {
+      
+      res.render('500', { message: `I'm sorry, but we have encountered the following error: ${err.message}` });
+    });
+  });
+
+app.get('/lego/editSet/:num', async (req, res) => {
+  try {
+    const setNum = req.params.num;
+    const [set, themes] = await Promise.all([legoData.getSetByNum(setNum), legoData.getAllThemes()]);
+
+    if (!set || !themes) {
+      res.status(404).render('404', { message: 'Set or themes not found' });
+    } else {
+      res.render('editSet', { set, themes });
+    }
+  } catch (err) {
+   
+    res.status(500).render('500', { message: `An error occurred: ${err.message}` });
+  }
+});
+
+app.post('/lego/editSet', async (req, res) => {
+  try {
+    const setNum = req.body.set_num;
+    const setData = req.body;
+
+    await legoData.editSet(setNum, setData);
+    res.redirect('/lego/sets');
+  } catch (err) {
+  
+    res.status(500).render('500', { message: `An error occurred: ${err.message}` });
+  }
+});
+
+app.get('/lego/deleteSet/:num', async (req, res) => {
+  try {
+    const setNum = req.params.num;
+    await legoData.deleteSet(setNum);
+    res.redirect('/lego/sets');
+  } catch (err) {
+    console.error(err);
+    const errorMessage = err.message || 'Unknown error occurred';
+    res.render('500', { message: `I'm sorry, but we have encountered the following error: ${errorMessage}` });
+  }
+});
 
 app.use(express.static('public'));
 
-// Custom 404 page handling
+
 app.use((req, res) => {
   res.status(404).render("404", {message: "I'm sorry, we're unable to find what you're looking for"});
 
